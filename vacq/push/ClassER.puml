@@ -1,0 +1,44 @@
+@startuml Class Diagram - CoWorkingSpace
+
+title "Class Diagram - CoWorkingSpace"
+
+class Server {
+  +app
+  +use()
+}
+
+class CoWorkingSpaceRouter {
+  +createCoWorkingSpace()
+  +getCoWorkingSpaces()
+  +getCoWorkingSpace()
+  +updateCoWorkingSpace()
+  +deleteCoWorkingSpace()
+}
+
+class CoWorkingSpaceController {
+  +createCoWorkingSpace()
+  +getCoWorkingSpaces()
+  +getCoWorkingSpace()
+  +updateCoWorkingSpace()
+  +deleteCoWorkingSpace()
+}
+
+class CoWorkingSpace {
+  +name : String
+  +address : String
+  +district : String
+  +province : String
+  +postalcode : String
+  +tel : String
+  +openTime : String
+  +closeTime : String
+}
+
+class MongoDB
+
+Server --> CoWorkingSpaceRouter
+CoWorkingSpaceRouter --> CoWorkingSpaceController
+CoWorkingSpaceController --> CoWorkingSpace
+CoWorkingSpace --> MongoDB
+
+@enduml
