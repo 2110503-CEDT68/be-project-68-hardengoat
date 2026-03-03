@@ -205,6 +205,7 @@ exports.deleteReservation = async (req, res, next) => {
     });
   }
 };
+<<<<<<< HEAD
 
 
 //Checkin
@@ -263,3 +264,5 @@ exports.checkOutReservation = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+=======
+>>>>>>> 8666acd9ff9fd63c62c3db61302f0859d6bf6c9b
