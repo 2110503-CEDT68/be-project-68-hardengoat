@@ -1,0 +1,65 @@
+@startuml
+left to right direction
+
+actor Guest
+actor User
+actor Admin
+
+rectangle "Coworking Space Reservation" {
+
+    ' --- Guest Area ---
+    (Register) as R
+    (Login) as L
+    (View Coworking Spaces) as VCS
+
+    ' --- User Area ---
+    (Manage Reservations) as MR
+    (View My Reservations) as VMR
+    (Create Reservation - Maximum 3) as CR3
+    (Update My Reservation) as UMR
+    (Delete My Reservation) as DMR
+    (Logout) as LO
+
+    ' --- Admin Area ---
+    (Manage Coworking Spaces) as MCS
+    (Create Coworking Space) as CCS
+    (Update Coworking Space) as UCS
+    (Delete Coworking Space) as DCS
+
+    (View All Reservations) as VAR
+    (Create Reservation - Unlimited) as CRU
+    (Update Any Reservation) as UAR
+    (Delete Any Reservation) as DAR
+}
+
+' --------------------
+' Guest
+Guest --> R
+Guest --> L
+Guest --> VCS
+
+' --------------------
+' User
+User --> VCS
+User --> MR
+User --> LO
+
+MR ..> VMR : <<can>>
+MR ..> CR3 : <<can>>
+MR ..> UMR : <<can>>
+MR ..> DMR : <<can>>
+
+' --------------------
+' Admin
+Admin --> MCS
+Admin --> VAR
+Admin --> CRU
+Admin --> UAR
+Admin --> DAR
+Admin --> LO
+
+MCS ..> CCS : <<can>>
+MCS ..> UCS : <<can>>
+MCS ..> DCS : <<can>>
+
+@enduml

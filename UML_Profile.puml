@@ -1,0 +1,100 @@
+@startuml
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+left to right direction
+
+title UML Profile - Coworking Reservation API
+
+package "Coworking Reservation API" {
+
+  class CoworkingReservationService <<Application>>
+
+  package Auth {
+
+    class Auth <<Resource>> {
+      +register() : AuthResponse <<POST>>
+      +login() : AuthResponse <<POST>>
+      +logout() : void <<POST>>
+      +getMe() : User <<GET>>
+    }
+
+    class User <<Representation>> {
+      -name : string
+      -email : string
+      -password : string
+      -role : string
+      -createdAt : Date
+    }
+
+    class AuthResponse <<Representation>> {
+      -success : boolean
+      -token : string
+    }
+
+    Auth ..> User
+    Auth ..> AuthResponse
+  }
+
+  package "Coworking Space" {
+
+    class CoworkingSpaces <<Resource>> {
+      +getCoworkingSpaces() : CoworkingSpace[] <<GET>>
+      +createCoworkingSpace() : CoworkingSpace <<POST>>
+    }
+
+    class CoworkingSpace <<Resource>> {
+      +getCoworkingSpace() : CoworkingSpace <<GET>>
+      +updateCoworkingSpace() : CoworkingSpace <<PUT>>
+      +deleteCoworkingSpace() : void <<DELETE>>
+    }
+
+    class CoworkingSpaceRepresentation <<Representation>> {
+      -name : string
+      -address : string
+      -tel : number
+      -openCloseTime : string
+      -createdAt : Date
+    }
+
+    CoworkingSpaces ..> CoworkingSpaceRepresentation
+    CoworkingSpace ..> CoworkingSpaceRepresentation
+  }
+
+  package Reservation {
+
+    class Reservations <<Resource>> {
+      +getReservations() : Reservation[] <<GET>>
+      +addReservation() : Reservation <<POST>>
+    }
+
+    class Reservation <<Resource>> {
+      +getReservation() : Reservation <<GET>>
+      +updateReservation() : Reservation <<PUT>>
+      +deleteReservation() : void <<DELETE>>
+    }
+
+    class ReservationRepresentation <<Representation>> {
+      -reservationDate : Date
+      -useDate : Date
+      -coworkingSpace : string
+      -createdAt : Date
+    }
+
+    Reservations ..> ReservationRepresentation
+    Reservation ..> ReservationRepresentation
+  }
+
+  Auth -[hidden]-> CoworkingSpaces
+  CoworkingSpaces -[hidden]-> Reservations
+  CoworkingReservationService -[hidden]-> CoworkingSpaces
+
+  CoworkingReservationService --> Auth : Path /auth
+  CoworkingReservationService --> CoworkingSpaces : Path /coworkingspaces
+  CoworkingReservationService --> CoworkingSpace : Path /coworkingspaces/{id}
+  CoworkingReservationService --> Reservations : Path /reservations
+  CoworkingReservationService --> Reservation : Path /reservations/{id}
+  CoworkingSpaces --> Reservations : Path /coworkingspaces/{id}/reservations
+
+}
+
+@enduml

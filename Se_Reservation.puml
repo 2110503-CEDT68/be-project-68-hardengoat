@@ -1,0 +1,155 @@
+@startuml Manage Reservation (GET ALL)
+
+header Sameple VacQ Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Reservation (GET ALL)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:reservations" as routerRes
+participant "<<controllers>>\n:reservations" as controllersRes
+participant "<<model>>\n:Reservation" as modelRes
+database "<<MongoDB>>\n:reservations" as ResDatabase
+
+client->server ++:req.get('/api/v1/reservations')
+
+server->routerRes ++:app.use('/api/v1/reservations',reservations)
+
+routerRes -> controllersRes ++:getReservations()
+
+controllersRes->modelRes ++:find()
+
+modelRes -> ResDatabase ++: ReservationSchema
+
+ResDatabase --> modelRes --: reservations[]
+
+controllersRes <-- modelRes --: reservations[]
+
+controllersRes->client --:response 200
+
+@enduml
+
+
+@startuml Manage Reservation (GET SINGLE)
+
+header Sameple VacQ Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Reservation (GET SINGLE)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:reservations" as routerRes
+participant "<<controllers>>\n:reservations" as controllersRes
+participant "<<model>>\n:Reservation" as modelRes
+database "<<MongoDB>>\n:reservations" as ResDatabase
+
+client->server ++:req.get('/api/v1/reservations/:id')
+
+server->routerRes ++:app.use('/api/v1/reservations',reservations)
+
+routerRes -> controllersRes ++:getReservation()
+
+controllersRes->modelRes ++:findById(req.params.id)
+
+modelRes -> ResDatabase ++: ReservationSchema
+
+ResDatabase --> modelRes --: reservation
+
+controllersRes <-- modelRes --: reservation
+
+controllersRes->client --:response 200
+
+@enduml
+@startuml Manage Reservation (POST)
+
+header Sameple VacQ Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Reservation (POST)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:reservations" as routerRes
+participant "<<controllers>>\n:reservations" as controllersRes
+participant "<<model>>\n:Reservation" as modelRes
+database "<<MongoDB>>\n:reservations" as ResDatabase
+
+client->server ++:req.post('/api/v1/reservations')
+
+server->routerRes ++:app.use('/api/v1/reservations',reservations)
+
+routerRes -> controllersRes ++:addReservation()
+
+controllersRes->modelRes ++:create(req.body)
+
+modelRes -> ResDatabase ++: ReservationSchema
+
+ResDatabase --> modelRes --: reservation
+
+controllersRes <-- modelRes --: reservation
+
+controllersRes->client --:response 201
+
+@enduml
+
+@startuml Manage Reservation (PUT)
+
+header Sameple VacQ Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Reservation (PUT)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:reservations" as routerRes
+participant "<<controllers>>\n:reservations" as controllersRes
+participant "<<model>>\n:Reservation" as modelRes
+database "<<MongoDB>>\n:reservations" as ResDatabase
+
+client->server ++:req.put('/api/v1/reservations/:id')
+
+server->routerRes ++:app.use('/api/v1/reservations',reservations)
+
+routerRes -> controllersRes ++:updateReservation()
+
+controllersRes->modelRes ++:findByIdAndUpdate(req.params.id,req.body)
+
+modelRes -> ResDatabase ++: ReservationSchema
+
+ResDatabase --> modelRes --: updatedReservation
+
+controllersRes <-- modelRes --: updatedReservation
+
+controllersRes->client --:response 200
+
+@enduml
+
+
+@startuml Manage Reservation (DELETE)
+
+header Sameple VacQ Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Reservation (DELETE)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:reservations" as routerRes
+participant "<<controllers>>\n:reservations" as controllersRes
+participant "<<model>>\n:Reservation" as modelRes
+database "<<MongoDB>>\n:reservations" as ResDatabase
+
+client->server ++:req.delete('/api/v1/reservations/:id')
+
+server->routerRes ++:app.use('/api/v1/reservations',reservations)
+
+routerRes -> controllersRes ++:deleteReservation()
+
+controllersRes->modelRes ++:findByIdAndDelete(req.params.id)
+
+modelRes -> ResDatabase ++: ReservationSchema
+
+ResDatabase --> modelRes --: null
+
+controllersRes <-- modelRes --: success
+
+controllersRes->client --:response 200
+
+@enduml
