@@ -19,15 +19,12 @@ const ReservationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-<<<<<<< HEAD
 
   status: {
   type: String,
   enum: ["BOOKED", "CHECKED_IN", "COMPLETED"],
   default: "BOOKED"
 }
-=======
->>>>>>> 8666acd9ff9fd63c62c3db61302f0859d6bf6c9b
 });
 
 module.exports = mongoose.model('Reservation', ReservationSchema);

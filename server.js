@@ -2,10 +2,6 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8666acd9ff9fd63c62c3db61302f0859d6bf6c9b
 const cookieParser = require('cookie-parser');
 const mongoSanitize = require('@exortek/express-mongo-sanitize');
 const { xss } = require('express-xss-sanitizer');
@@ -78,19 +74,13 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 const auth = require('./routes/auth');
 const coworkingSpaces = require('./routes/coworkingSpaces');
 const reservations = require('./routes/reservations');
-<<<<<<< HEAD
 const reviewRoutes = require('./routes/reviews');
 
-=======
->>>>>>> 8666acd9ff9fd63c62c3db61302f0859d6bf6c9b
 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/coworkingspaces', coworkingSpaces);
 app.use('/api/v1/reservations', reservations);
-<<<<<<< HEAD
 app.use('/api/v1/reviews', reviewRoutes);
-=======
->>>>>>> 8666acd9ff9fd63c62c3db61302f0859d6bf6c9b
 
 // Set query parser
 app.set('query parser', 'extended');
